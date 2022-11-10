@@ -43,7 +43,7 @@ class TaskController extends Controller
      */
     public function show(Request $request)
     {
-        $task_id = $request->route('id');
+        $task_id = $request->route('task');
         return Task::find($task_id);
     }
 
@@ -55,7 +55,7 @@ class TaskController extends Controller
      */
     public function update(Request $request)
     {
-        $task_id = $request->route('id');
+        $task_id = $request->route('task');
         $task = Task::find($task_id);
 
         $task->title = $request->title;
@@ -63,7 +63,10 @@ class TaskController extends Controller
         $task->status = $request->status;
         $task->update();
 
-        return "Update Successfull.";
+        return response()->json([
+            'status' => true,
+            'message' => "Task update successfull!",
+        ], 200);
     }
 
     /**
@@ -74,10 +77,13 @@ class TaskController extends Controller
      */
     public function destroy(Request $request)
     {
-        $task_id = $request->route('id');
+        $task_id = $request->route('task');
         $task = Task::find($task_id);
         $task->delete();
 
-        return "Delete Successful.";
+        return response()->json([
+            'status' => true,
+            'message' => "Task delete successfull!",
+        ], 200);
     }
 }
